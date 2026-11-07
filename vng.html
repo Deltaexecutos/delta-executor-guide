@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delta Executor VNG — Guia da Versão 2027</title>
+<meta name="description" content="Guia da versão VNG do Delta Executor: o que é, o que muda, como instalar, como executar scripts e perguntas frequentes.">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0; line-height: 1.75; color: #232040; background: #f4f3fa; }
+  .topbar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .7rem 1.4rem; background: rgba(15,10,46,.96); color: #fff; box-shadow: 0 2px 18px rgba(15,10,46,.35); }
+  .topbar .logo { font-weight: 800; letter-spacing: .06em; font-size: 1.05rem; white-space: nowrap; }
+  .topbar .logo span { color: #22d3ee; }
+  .topbar nav { display: flex; flex-wrap: wrap; gap: .35rem; justify-content: flex-end; }
+  .topbar nav a { color: #e0e7ff; text-decoration: none; font-size: .9rem; padding: .35rem .8rem; border-radius: 999px; }
+  .topbar nav a:hover { background: rgba(255,255,255,.14); color: #fff; }
+  .hero { position: relative; overflow: hidden; color: #fff; text-align: center; padding: 4.5rem 1rem 3.5rem; }
+  .hero::before { content: ""; position: absolute; inset: 0; background: url("code.jpg") center/cover no-repeat; }
+  .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(76,29,149,.88), rgba(15,10,46,.82) 65%, rgba(8,145,178,.55)); }
+  .hero > * { position: relative; z-index: 1; }
+  .hero .badge { display: inline-block; border: 2px solid #22d3ee; color: #a5f3fc; border-radius: 999px; padding: .35rem 1.2rem; font-weight: 700; letter-spacing: .18em; font-size: .85rem; background: rgba(15,10,46,.35); }
+  .hero h1 { font-size: 3.2rem; margin: 1.1rem 0 .4rem; line-height: 1.05; text-shadow: 0 2px 24px rgba(0,0,0,.45); }
+  .hero p.tagline { font-size: 1.3rem; color: #e0e7ff; margin: .2rem 0 1.6rem; }
+  .hero .cta { display: flex; flex-wrap: wrap; gap: .7rem; justify-content: center; margin-bottom: 2rem; }
+  .hero .cta a { color: #fff; text-decoration: none; font-weight: 700; padding: .7rem 1.5rem; border-radius: 999px; background: linear-gradient(90deg, #7c3aed, #06b6d4); box-shadow: 0 6px 20px rgba(6,182,212,.45); }
+  .hero .cta a.ghost { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.45); box-shadow: none; }
+  .hero .stats { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+  .hero .stat { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.28); border-radius: 14px; padding: .7rem 1.3rem; min-width: 130px; }
+  .hero .stat b { display: block; font-size: 1.5rem; line-height: 1.2; }
+  .hero .stat span { font-size: .88rem; color: #c7d2fe; }
+  main { max-width: 860px; margin: 0 auto; padding: 2.5rem 1rem 3rem; }
+  .facts { background: linear-gradient(135deg, #ede9fe, #cffafe); border: 1px solid #c4b5fd; border-radius: 18px; padding: 1.4rem 1.6rem; margin-bottom: 2.2rem; box-shadow: 0 4px 20px rgba(76,29,149,.10); }
+  .facts h3 { margin: 0 0 .6rem; color: #4c1d95; font-size: 1.15rem; }
+  .facts ul { margin: 0; padding-left: 1.2rem; }
+  .facts li { margin-bottom: .3rem; }
+  section.card { background: #fff; border-radius: 20px; padding: 2rem 2rem 1.6rem; margin-bottom: 1.8rem; box-shadow: 0 6px 26px rgba(30,27,75,.08); }
+  .cardhead { display: flex; align-items: baseline; gap: .9rem; margin-bottom: .6rem; }
+  .num { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.25rem; color: #fff; background: linear-gradient(135deg, #7c3aed, #06b6d4); transform: translateY(6px); }
+  h2 { margin: 0; font-size: 1.65rem; letter-spacing: -0.01em; background: linear-gradient(90deg, #7c3aed, #06b6d4); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  img.section-img { width: 100%; display: block; border-radius: 14px; margin: 0 0 1.1rem; }
+  ul, ol { padding-left: 1.2rem; }
+  li { margin-bottom: .4rem; }
+  details { border: 1px solid #ddd6fe; border-radius: 14px; padding: .9rem 1.1rem; margin-bottom: .7rem; background: #faf9ff; }
+  details summary { cursor: pointer; font-weight: 700; color: #4c1d95; font-size: 1.05rem; }
+  details p { margin: .6rem 0 0; }
+  footer { background: #0f0a2e; color: #c7d2fe; text-align: center; padding: 2.4rem 1rem; }
+  footer .fname { color: #fff; font-weight: 700; font-size: 1.15rem; }
+  footer .fnav { margin: .8rem 0; font-size: .95rem; }
+  footer small { color: #94a3b8; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="logo">◆ <span>DELTA</span> EXECUTOR</div>
+  <nav>
+    <a href="#o-que-e">Versão VNG</a>
+    <a href="#diferencas">Diferenças</a>
+    <a href="#instalacao">Instalação</a>
+    <a href="#scripts">Scripts</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+</div>
+
+<header class="hero">
+  <span class="badge">VERSÃO VNG</span>
+  <h1>Delta Executor VNG</h1>
+  <p class="tagline">Guia da versão VNG, o que muda e como usar</p>
+  <div class="cta">
+    <a href="#o-que-e">O que é a VNG</a>
+    <a class="ghost" href="#instalacao">Ir para instalação</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>VNG</b><span>versão</span></div>
+    <div class="stat"><b>Android</b><span>dispositivo</span></div>
+    <div class="stat"><b>100%</b><span>em português</span></div>
+    <div class="stat"><b>2027</b><span>guia atualizado</span></div>
+  </div>
+</header>
+
+<main>
+<div class="facts">
+<h3>Guia rápido — o essencial em 30 segundos</h3>
+<ul>
+<li><strong>VNG é uma versão alternativa</strong> do Delta Executor, com guia próprio.</li>
+<li><strong>Antes de baixar:</strong> entenda o que muda nessa versão e confira os requisitos.</li>
+<li><strong>Scripts:</strong> funcionam da mesma forma — copiar, colar e executar.</li>
+</ul>
+</div>
+
+<section class="card" id="o-que-e">
+<div class="cardhead"><span class="num">1</span><h2>O que é a versão VNG</h2></div>
+<p>A versão VNG do Delta Executor é uma variante do aplicativo, feita para um cenário de uso diferente da versão comum. O guia da versão VNG explica o que muda nessa versão e o que você precisa saber antes de baixar, para você escolher com calma se ela é a certa para o seu caso. A proposta continua a mesma: baixar, instalar, colar o script e executar, sem complicação. A interface é simples e os guias estão em português, o que ajuda tanto quem está começando agora quanto quem já tem experiência com scripts e quer apenas uma ferramenta estável para o dia a dia.</p>
+</section>
+
+<section class="card" id="diferencas">
+<div class="cardhead"><span class="num">2</span><h2>O que muda na versão VNG</h2></div>
+<img class="section-img" src="gameplay.jpg" alt="Smartphone mostrando um jogo voxel colorido">
+<p>O que muda na versão VNG é o contexto de uso e alguns detalhes da instalação, enquanto a execução de scripts continua funcionando da mesma forma. Por isso, antes de baixar, leia o guia com atenção e confira os requisitos do seu aparelho. Não trate a VNG como uma simples atualização da versão comum: são versões diferentes, com guias diferentes. Escolher a versão errada para o seu caso é uma das causas mais comuns de erro na primeira instalação. Se você já usa a versão comum sem problemas, não há motivo para trocar só por trocar — mude apenas se o seu caso pedir a versão VNG.</p>
+</section>
+
+<section class="card" id="instalacao">
+<div class="cardhead"><span class="num">3</span><h2>Como instalar a versão VNG</h2></div>
+<p>Para instalar a versão VNG, o primeiro passo é conferir os requisitos do seu aparelho e seguir o guia de instalação correspondente a essa versão. No Android, a instalação é direta pelo arquivo do aplicativo. Depois de instalar, abra o aplicativo, confira se ele abre normalmente e só então execute o seu primeiro script. Comece com scripts simples, de fontes conhecidas, e só depois avance para scripts mais complexos. Siga as etapas na ordem: pular passos é a causa mais comum de erros na primeira instalação. Se algo falhar no meio do caminho, volte uma etapa e refaça com calma.</p>
+</section>
+
+<section class="card" id="scripts">
+<div class="cardhead"><span class="num">4</span><h2>Como executar scripts na VNG</h2></div>
+<img class="section-img" src="code.jpg" alt="Código brilhante em tons de violeta e ciano em uma tela escura">
+<p>Executar um script na versão VNG é simples. Primeiro, copie o código do script que você quer usar. Depois, abra o executor, cole o código na área indicada e toque em executar. O script passa a rodar dentro do jogo. Se nada acontecer, confira se o código está completo e se a versão do aplicativo está atualizada. Scripts desatualizados são uma das causas mais comuns de falha. Prefira scripts de fontes conhecidas e evite copiar códigos de qualquer lugar sem verificar a origem, porque um código mal feito pode travar o jogo ou não funcionar como esperado. Guarde os seus scripts favoritos para executar novamente sem precisar copiar tudo outra vez.</p>
+</section>
+
+<section class="card" id="faq">
+<div class="cardhead"><span class="num">5</span><h2>Perguntas frequentes</h2></div>
+<details>
+<summary>Devo trocar a versão comum pela VNG?</summary>
+<p>Troque apenas se o seu caso pedir a versão VNG. Se a versão comum funciona bem, não há motivo para trocar.</p>
+</details>
+<details>
+<summary>Os scripts são os mesmos?</summary>
+<p>Sim. A execução de scripts funciona da mesma forma: copiar, colar e executar.</p>
+</details>
+<details>
+<summary>Posso usar qualquer script?</summary>
+<p>Prefira scripts de fontes conhecidas e atualizados, e comece pelos mais simples.</p>
+</details>
+<details>
+<summary>E se der erro?</summary>
+<p>Confira se o código está completo, se o aplicativo está atualizado e revise as etapas do guia da versão VNG.</p>
+</details>
+</section>
+</main>
+
+<footer>
+  <div class="fname">Delta Executor VNG — Guia da Versão 2027</div>
+  <div class="fnav">Versão VNG &middot; Diferenças &middot; Instalação &middot; Scripts &middot; FAQ</div>
+  <p>Página informativa com guias em português. Consulte o site oficial para a versão atual e as instruções de instalação.</p>
+  <small>© 2027 Delta Executor. Todos os direitos reservados.</small>
+</footer>
+</body>
+</html>

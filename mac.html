@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delta Executor para Mac — Guia Completo 2027</title>
+<meta name="description" content="Guia do Delta Executor para Mac: requisitos, emulador Android, instalação passo a passo, como executar scripts e dicas de desempenho no macOS.">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0; line-height: 1.75; color: #232040; background: #f4f3fa; }
+  .topbar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .7rem 1.4rem; background: rgba(15,10,46,.96); color: #fff; box-shadow: 0 2px 18px rgba(15,10,46,.35); }
+  .topbar .logo { font-weight: 800; letter-spacing: .06em; font-size: 1.05rem; white-space: nowrap; }
+  .topbar .logo span { color: #22d3ee; }
+  .topbar nav { display: flex; flex-wrap: wrap; gap: .35rem; justify-content: flex-end; }
+  .topbar nav a { color: #e0e7ff; text-decoration: none; font-size: .9rem; padding: .35rem .8rem; border-radius: 999px; }
+  .topbar nav a:hover { background: rgba(255,255,255,.14); color: #fff; }
+  .hero { position: relative; overflow: hidden; color: #fff; text-align: center; padding: 4.5rem 1rem 3.5rem; }
+  .hero::before { content: ""; position: absolute; inset: 0; background: url("hero.jpg") center/cover no-repeat; }
+  .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(76,29,149,.88), rgba(15,10,46,.82) 65%, rgba(8,145,178,.55)); }
+  .hero > * { position: relative; z-index: 1; }
+  .hero .badge { display: inline-block; border: 2px solid #22d3ee; color: #a5f3fc; border-radius: 999px; padding: .35rem 1.2rem; font-weight: 700; letter-spacing: .18em; font-size: .85rem; background: rgba(15,10,46,.35); }
+  .hero h1 { font-size: 3.2rem; margin: 1.1rem 0 .4rem; line-height: 1.05; text-shadow: 0 2px 24px rgba(0,0,0,.45); }
+  .hero p.tagline { font-size: 1.3rem; color: #e0e7ff; margin: .2rem 0 1.6rem; }
+  .hero .cta { display: flex; flex-wrap: wrap; gap: .7rem; justify-content: center; margin-bottom: 2rem; }
+  .hero .cta a { color: #fff; text-decoration: none; font-weight: 700; padding: .7rem 1.5rem; border-radius: 999px; background: linear-gradient(90deg, #7c3aed, #06b6d4); box-shadow: 0 6px 20px rgba(6,182,212,.45); }
+  .hero .cta a.ghost { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.45); box-shadow: none; }
+  .hero .stats { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+  .hero .stat { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.28); border-radius: 14px; padding: .7rem 1.3rem; min-width: 130px; }
+  .hero .stat b { display: block; font-size: 1.5rem; line-height: 1.2; }
+  .hero .stat span { font-size: .88rem; color: #c7d2fe; }
+  main { max-width: 860px; margin: 0 auto; padding: 2.5rem 1rem 3rem; }
+  .facts { background: linear-gradient(135deg, #ede9fe, #cffafe); border: 1px solid #c4b5fd; border-radius: 18px; padding: 1.4rem 1.6rem; margin-bottom: 2.2rem; box-shadow: 0 4px 20px rgba(76,29,149,.10); }
+  .facts h3 { margin: 0 0 .6rem; color: #4c1d95; font-size: 1.15rem; }
+  .facts ul { margin: 0; padding-left: 1.2rem; }
+  .facts li { margin-bottom: .3rem; }
+  section.card { background: #fff; border-radius: 20px; padding: 2rem 2rem 1.6rem; margin-bottom: 1.8rem; box-shadow: 0 6px 26px rgba(30,27,75,.08); }
+  .cardhead { display: flex; align-items: baseline; gap: .9rem; margin-bottom: .6rem; }
+  .num { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.25rem; color: #fff; background: linear-gradient(135deg, #7c3aed, #06b6d4); transform: translateY(6px); }
+  h2 { margin: 0; font-size: 1.65rem; letter-spacing: -0.01em; background: linear-gradient(90deg, #7c3aed, #06b6d4); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  img.section-img { width: 100%; display: block; border-radius: 14px; margin: 0 0 1.1rem; }
+  ul, ol { padding-left: 1.2rem; }
+  li { margin-bottom: .4rem; }
+  details { border: 1px solid #ddd6fe; border-radius: 14px; padding: .9rem 1.1rem; margin-bottom: .7rem; background: #faf9ff; }
+  details summary { cursor: pointer; font-weight: 700; color: #4c1d95; font-size: 1.05rem; }
+  details p { margin: .6rem 0 0; }
+  footer { background: #0f0a2e; color: #c7d2fe; text-align: center; padding: 2.4rem 1rem; }
+  footer .fname { color: #fff; font-weight: 700; font-size: 1.15rem; }
+  footer .fnav { margin: .8rem 0; font-size: .95rem; }
+  footer small { color: #94a3b8; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="logo">◆ <span>DELTA</span> EXECUTOR</div>
+  <nav>
+    <a href="#requisitos">Requisitos</a>
+    <a href="#instalacao">Instalação</a>
+    <a href="#scripts">Scripts</a>
+    <a href="#desempenho">Desempenho</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+</div>
+
+<header class="hero">
+  <span class="badge">GUIA PARA MAC</span>
+  <h1>Delta Executor para Mac</h1>
+  <p class="tagline">Guia completo com emulador Android no macOS</p>
+  <div class="cta">
+    <a href="#requisitos">Ver requisitos</a>
+    <a class="ghost" href="#instalacao">Ir para instalação</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>macOS</b><span>sistema</span></div>
+    <div class="stat"><b>Emulador</b><span>Android</span></div>
+    <div class="stat"><b>100%</b><span>em português</span></div>
+    <div class="stat"><b>2027</b><span>guia atualizado</span></div>
+  </div>
+</header>
+
+<main>
+<div class="facts">
+<h3>Guia rápido — o essencial em 30 segundos</h3>
+<ul>
+<li><strong>Não existe versão nativa para Mac:</strong> o uso no macOS é com emulador Android.</li>
+<li><strong>Mesma lógica do PC:</strong> emulador instalado → aplicativo instalado → script executado.</li>
+<li><strong>Desempenho:</strong> reserve memória suficiente para o emulador e feche outros programas.</li>
+</ul>
+</div>
+
+<section class="card" id="requisitos">
+<div class="cardhead"><span class="num">1</span><h2>O que você precisa</h2></div>
+<p>Antes de começar, confira os requisitos do seu Mac. Você precisa de um Mac com macOS, um emulador Android instalado e espaço livre suficiente no disco. Reserve memória suficiente para o emulador, porque ele divide os recursos com o macOS e com o jogo — quanto mais folga, mais estável fica a execução. Mantenha o macOS atualizado e feche programas pesados antes de começar. Confira também a sua conexão com a internet, porque o download do emulador e do aplicativo precisa de uma rede estável. Se o Mac já fica lento com tarefas simples, a experiência no emulador também será limitada.</p>
+</section>
+
+<section class="card" id="instalacao">
+<div class="cardhead"><span class="num">2</span><h2>Como instalar com emulador</h2></div>
+<img class="section-img" src="setup.jpg" alt="Setup gamer com monitor exibindo um jogo voxel">
+<p>A instalação no Mac segue a mesma lógica do PC, com emulador Android, do download até a primeira execução. Primeiro, instale um emulador Android no macOS e conclua a configuração inicial dele. Depois, instale o aplicativo do Delta Executor dentro do emulador, seguindo o mesmo processo de instalação do Android. Abra o aplicativo dentro do emulador e confira se ele abre normalmente antes de tentar qualquer script. Só depois dessa verificação, abra o jogo dentro do emulador e execute o seu primeiro script. Siga as etapas na ordem e não pule passos: pular a configuração do emulador é a causa mais comum de erros na primeira instalação no Mac.</p>
+</section>
+
+<section class="card" id="scripts">
+<div class="cardhead"><span class="num">3</span><h2>Como executar scripts no Mac</h2></div>
+<img class="section-img" src="code.jpg" alt="Código brilhante em tons de violeta e ciano em uma tela escura">
+<p>Executar um script no Mac funciona como no PC e no Android. Copie o código do script que você quer usar, abra o executor dentro do emulador, cole o código na área indicada e toque em executar. O script passa a rodar dentro do jogo. Se nada acontecer, confira se o código está completo e se a versão do aplicativo está atualizada, porque scripts desatualizados são uma das causas mais comuns de falha. Prefira scripts de fontes conhecidas e comece pelos mais simples. Guarde os seus scripts favoritos para executar novamente sem precisar copiar tudo outra vez.</p>
+</section>
+
+<section class="card" id="desempenho">
+<div class="cardhead"><span class="num">4</span><h2>Dicas de desempenho</h2></div>
+<p>Pequenos ajustes deixam o Delta Executor mais rápido e estável no Mac. Feche aplicativos que você não está usando, libere espaço no disco e mantenha o aplicativo e o emulador atualizados. No emulador, reserve memória suficiente e ajuste as configurações de desempenho conforme o seu Mac. Esses cuidados simples evitam travamentos e deixam a execução de scripts mais suave, principalmente em jogos mais pesados. Se o jogo fechar sozinho, feche outros aplicativos em segundo plano e tente novamente com menos coisas abertas.</p>
+</section>
+
+<section class="card" id="faq">
+<div class="cardhead"><span class="num">5</span><h2>Perguntas frequentes</h2></div>
+<details>
+<summary>Preciso de emulador no Mac?</summary>
+<p>Sim. Não existe uma versão nativa para macOS, então o uso no Mac é com emulador Android.</p>
+</details>
+<details>
+<summary>O guia do Mac é igual ao do PC?</summary>
+<p>Segue a mesma lógica: emulador Android, do download até a primeira execução.</p>
+</details>
+<details>
+<summary>Posso usar o mesmo script do celular?</summary>
+<p>Sim. Os scripts são os mesmos: copie o código, cole no executor e execute dentro do jogo.</p>
+</details>
+<details>
+<summary>E se o aplicativo não abrir?</summary>
+<p>Verifique se a instalação dentro do emulador foi concluída corretamente e se o aparelho virtual atende aos requisitos.</p>
+</details>
+</section>
+</main>
+
+<footer>
+  <div class="fname">Delta Executor para Mac — Guia Completo 2027</div>
+  <div class="fnav">Requisitos &middot; Instalação &middot; Scripts &middot; Desempenho &middot; FAQ</div>
+  <p>Página informativa com guias em português. Consulte o site oficial para a versão atual e as instruções de instalação.</p>
+  <small>© 2027 Delta Executor. Todos os direitos reservados.</small>
+</footer>
+</body>
+</html>
